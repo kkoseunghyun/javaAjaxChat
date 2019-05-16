@@ -1,0 +1,3 @@
+model(data) = DAO,DTO
+controller = Servlet (request, response)
+view = .jsp

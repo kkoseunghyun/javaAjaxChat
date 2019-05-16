@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;arr&apos; in &apos;chat.ChatListServlet.getTen(...)&apos; to &apos;arr2&apos;&#x0D;&#x0A;- Original project: &apos;UserChat&apos;&#x0D;&#x0A;- Original element: &apos;chat.ChatListServlet.getTen(String, String).arr&apos;&#x0D;&#x0A;- Renamed element: &apos;arr&apos;&#x0D;&#x0A;- Update references to refactored element" description="Rename local variable &apos;arr&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src&lt;chat{ChatListServlet.java[ChatListServlet~getTen~QString;~QString;@arr!1903!1934!1913!1915!QJSONArray;!0!false" name="arr2" references="true" stamp="1554349427462" version="1.0"/>
+</session>
