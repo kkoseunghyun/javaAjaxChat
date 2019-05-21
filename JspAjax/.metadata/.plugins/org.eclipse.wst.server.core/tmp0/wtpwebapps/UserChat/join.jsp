@@ -64,11 +64,11 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="main.jsp">실시간 회원제 채팅 서비스</a>
+			<a class="navbar-brand" href="index.jsp">실시간 회원제 채팅 서비스</a>
 		</div>
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="main.jsp">메인</a></li>
+				<li class="active"><a href="index.jsp">메인</a></li>
 				<li><a href="find.jsp">친구찾기</a></li>
 			</ul>
 			<%

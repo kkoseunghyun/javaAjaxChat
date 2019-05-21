@@ -16,6 +16,7 @@ public class ChatSubmitServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;chatset=UTF-8");
+		
 		String fromID = request.getParameter("fromID");
 		String toID = request.getParameter("toID");
 		String chatContent = request.getParameter("chatContent");
@@ -23,6 +24,8 @@ public class ChatSubmitServlet extends HttpServlet {
 		if(fromID == null || fromID.equals("") || toID == null || toID.equals("") 
 				|| chatContent == null || chatContent.equals("")) {
 			response.getWriter().write("0");
+		} else if(fromID.equals(toID)) {	// 보낸사람이 자기자신인 경우
+			response.getWriter().write("-1");
 		} else {
 			fromID = URLDecoder.decode(fromID, "UTF-8");
 			toID = URLDecoder.decode(toID, "UTF-8");

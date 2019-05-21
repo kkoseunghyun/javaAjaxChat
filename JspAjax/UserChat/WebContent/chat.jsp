@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.net.URLDecoder" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,10 +12,10 @@
 		if(request.getParameter("toID") != null){
 			toID = (String) request.getParameter("toID");
 		}
-		if(userID == null) {
+		if(userID == null) { /* chat.jsp는 로그인이 되었다는 가정하에 작동 */
 			session.setAttribute("messageType", "오류 메세지");
-			session.setAttribute("messageContent", "현재 로그인이 되어 있지 않습니다.");
-			response.sendRedirect("index.jsp");
+			session.setAttribute("messageContent", "현재 로그인이 되어 있지 않습니다."); 
+			response.sendRedirect("index.jsp");	
 			return;
 		}
 		if(toID == null) {
@@ -23,12 +24,18 @@
 			response.sendRedirect("index.jsp");
 			return;
 		}
+		if(userID.equals(URLDecoder.decode(toID,"UTF-8"))) {
+			session.setAttribute("messageType", "오류 메세지");
+			session.setAttribute("messageContent", "자기자신에게는 메세지를 보낼 수 없습니다.");
+			response.sendRedirect("index.jsp");
+			return;
+		}
 	%>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="css/custom.css?ver=1">
-	<link rel="stylesheet" type="text/css" href="css/custom2.css">
+	<link rel="stylesheet" type="text/css" href="css/custom2.css?ver=1">
 	<title>JSP Ajax 실시간 회원제 채팅 서비스</title>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="js/bootstrap.js"></script>
@@ -43,7 +50,7 @@
 		/* 전송 버튼 눌렀을때 일어나는 이벤트정의함수 */
 		function submitFunction() {	
 			alert('전송완료!');
-			var fromID = '<%= userID %>';
+			var fromID = '<%= userID %>'; 
 			var toID = '<%= toID %>';
 			var chatContent = $('#chatContent').val();
 			$.ajax({
@@ -82,7 +89,7 @@
 				},
 				success: function(data) {
 					if(data == "") return; 
-					// console.log(data);
+					console.log(data);
 					var parsed = JSON.parse(data);	// JSON문자열을 JavaScript 객체로 파싱(변환)
 					var result = parsed.result;
 					for(var i = 0 ; i < result.length ; i++) {
@@ -125,6 +132,32 @@
 				//console.log(lastID);
 			}, 3000);
 		}
+		
+		/* box.jsp */
+		function getUnread() {
+			$.ajax({
+				type: "POST",
+				url: "./chatUnread",
+				data: {
+					userID: encodeURIComponent('<%= userID %>'),
+				},
+				success: function(result) {
+					if(result >= 1) {
+						showUnread(result);
+					} else {
+						showUnread('');
+					}
+				}
+			});
+		}
+		function getInfiniteUnread() {
+			setInterval(function() {
+				getUnread();
+			}, 4000);
+		}
+		function showUnread(result) {
+			$('#unread').html(result);
+		}
 	</script>
 </head>
 <body>
@@ -137,12 +170,13 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="main.jsp">실시간 회원제 채팅 서비스</a>
+			<a class="navbar-brand" href="index.jsp">실시간 회원제 채팅 서비스</a>
 		</div>
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="main.jsp">메인</a></li>
+				<li class="active"><a href="index.jsp">메인</a></li>
 				<li><a href="find.jsp">친구찾기</a></li>
+				<li><a href="box.jsp">메세지함<span id="unread" class="label label-info"></span></a></li>
 			</ul>
 			<%
 				if(userID != null) {
@@ -153,6 +187,7 @@
 						data-toggle="dropdown" role="button" aria-haspopup="true"
 						aria-expanded="false">회원관리<span class="caret"></span></a>
 					<ul class="dropdown-menu">
+						<li><a href="update.jsp">회원정보수정</a></li>
 						<li><a href="logoutAction.jsp">로그아웃</a></li>
 					</ul>
 				</li>	
@@ -197,7 +232,7 @@
 		<strong>메세지 전송에 성공했습니다.</strong>	
 	</div>
 	<div class="alert alert-danger" id="dangerMessage" style="display:none;">
-		<strong>내용을  입력해주세요.</strong>	
+		<strong>내용을  모두 입력해주세요.</strong>	
 	</div>
 	<div class="alert alert-warning" id="warningMessage" style="display:none;">
 		<strong>데이터베이스 오류가 발생했습니다.</strong>	
@@ -238,18 +273,27 @@
 			</div>
 		</div>
 	</div>
-	<script>
-		$('#messageModal').modal("show");
-	</script>
 	<%
 		session.removeAttribute("messageContent");
 		session.removeAttribute("messageType");
 		}
 	%>
-	<script type="text/javascript">
-		$(document).ready(function() {
-			getInfiniteChat();
-		});
+	<script>
+		$('#messageModal').modal("show");
 	</script>
+	<%
+		if(userID != null) {
+	%>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				getUnread(); // 4초 안기다리고 바로 볼 수 있게 먼저해놓음 
+				chatListFunction('0'); // 4초 안기다리고 바로 볼 수 있게 먼저해놓음 
+				getInfiniteChat();
+				getInfiniteUnread();
+			});
+		</script>
+	<%
+		}
+	%>
 </body>
 </html>

@@ -60,6 +60,31 @@
 		function failFunction() {
 			$('#friendResult').html('');
 		}
+		/* box.jsp */
+		function getUnread() {
+			$.ajax({
+				type: "POST",
+				url: "./chatUnread",
+				data: {
+					userID: encodeURIComponent('<%= userID %>'),
+				},
+				success: function(result) {
+					if(result >= 1) {
+						showUnread(result);
+					} else {
+						showUnread('');
+					}
+				}
+			});
+		}
+		function getInfiniteUnread() {
+			setInterval(function() {
+				getUnread();
+			}, 4000);
+		}
+		function showUnread(result) {
+			$('#unread').html(result);
+		}
 	</script>
 </head>
 <body>
@@ -72,13 +97,31 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="main.jsp">실시간 회원제 채팅 서비스</a>
+			<a class="navbar-brand" href="index.jsp">실시간 회원제 채팅 서비스</a>
 		</div>
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="main.jsp">메인</a></li>
+				<li class="active"><a href="index.jsp">메인</a></li>
 				<li><a href="find.jsp">친구찾기</a></li>
+				<li><a href="box.jsp">메세지함<span id="unread" class="label label-info"></span></a></li>
 			</ul>
+			<%
+				if(userID != null) {
+			%>
+			<ul class="nav navbar-nav navbar-right">
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false">회원관리<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="update.jsp">회원정보수정</a></li>
+						<li><a href="logoutAction.jsp">로그아웃</a></li>
+					</ul>
+				</li>	
+			</ul>
+			<%
+				}
+			%>
 		</div>
 	</nav>
 	<div class="container">
@@ -169,12 +212,24 @@
 			</div>
 		</div>
 	</div>
+	<%
+		session.removeAttribute("messageContent");
+		session.removeAttribute("messageType");
+		}
+	%>
 	<script>
 		$('#messageModal').modal("show");
 	</script>
 	<%
-		session.removeAttribute("messageContent");
-		session.removeAttribute("messageType");
+		if(userID != null) {
+	%>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				getUnread(); // 4초 안기다리고 바로 볼 수 있게 먼저해놓음 
+				getInfiniteUnread();
+			});
+		</script>
+	<%
 		}
 	%>
 </body>

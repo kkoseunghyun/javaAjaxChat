@@ -33,11 +33,11 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="main.jsp">실시간 회원제 채팅 서비스</a>
+			<a class="navbar-brand" href="index.jsp">실시간 회원제 채팅 서비스</a>
 		</div>
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="main.jsp">메인</a></li>
+				<li class="active"><a href="index.jsp">메인</a></li>
 				<li><a href="find.jsp">친구찾기</a></li>
 			</ul>
 			<%
@@ -61,7 +61,7 @@
 	</nav>
 	<!-- POST방식으로 ./userLogin으로 이동하는 부분 
 			web.xml 에 ./userLogin으로 이동할시 userLoginServlet으로 이동하도록 설정했었다. 
-				userLoginServlet에서 각종 로그인관련된 messageContent 설정이 되어있음 -->
+				userLoginServlet에서 각종 로그인관련된 messageContent 설정 + '세션'설정  -->
 	<div class="container">
 		<form method="post" action="./userLogin">
 			<table class="table table-bordered table-hover" style="text-align: center; border:1px soild #dddddd;">

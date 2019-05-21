@@ -14,8 +14,10 @@ public class UserLoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
+		
 		String userID = request.getParameter("userID");
 		String userPassword = request.getParameter("userPassword");
+		
 		if(userID == null || userID.equals("") || userPassword == null || userPassword.equals("")) {
 			request.getSession().setAttribute("messageType", "오류 메세지");
 			request.getSession().setAttribute("messageContent", "모든 내용을 입력해주세요.");
