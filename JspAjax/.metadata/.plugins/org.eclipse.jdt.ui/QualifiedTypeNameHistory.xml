@@ -10,4 +10,5 @@
 <fullyQualifiedTypeName name="org.json.simple.JSONObject"/>
 <fullyQualifiedTypeName name="org.json.simple.JSONArray"/>
 <fullyQualifiedTypeName name="java.net.URLDecoder"/>
+<fullyQualifiedTypeName name="javax.servlet.http.HttpSession"/>
 </qualifiedTypeNameHistroy>

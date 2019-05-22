@@ -1,7 +1,9 @@
 INDEX VERSION 1.131
-C:\JspAjax\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\68668896.index
+C:\Users\pym78\Documents\GitHub\javaAjaxChat\JspAjax\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\68668896.index
 \UserChat\src
 C:\JspAjax\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3848304228.index
 \UserChat\src
-C:\Users\pym78\Documents\GitHub\javaAjaxChat\JspAjax\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\68668896.index
+C:\JspAjax\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\68668896.index
+\UserChat\src
+C:\Users\pym78\Documents\GitHub\javaAjaxChat\JspAjax\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1737891139.index
 \UserChat\src

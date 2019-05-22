@@ -24,6 +24,7 @@
 			response.sendRedirect("index.jsp");
 			return;
 		}
+		/* 자기자신에게 메세지 보낼 수 없도록 */
 		if(userID.equals(URLDecoder.decode(toID,"UTF-8"))) {
 			session.setAttribute("messageType", "오류 메세지");
 			session.setAttribute("messageContent", "자기자신에게는 메세지를 보낼 수 없습니다.");
@@ -79,6 +80,7 @@
 		function chatListFunction(type) {	
 			var fromID = '<%= userID %>';
 			var toID = '<%= toID %>';
+			
 			$.ajax({
 				type: "POST",
 				url: "./chatListServlet",
@@ -133,7 +135,7 @@
 			}, 3000);
 		}
 		
-		/* box.jsp */
+		/* 상단 내비게이션 메세지함 unread 라벨 표시 */
 		function getUnread() {
 			$.ajax({
 				type: "POST",

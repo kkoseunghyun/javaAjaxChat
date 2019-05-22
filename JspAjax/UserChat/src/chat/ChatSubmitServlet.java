@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet("/ChatSubmitServlet")
 public class ChatSubmitServlet extends HttpServlet {
@@ -29,6 +30,14 @@ public class ChatSubmitServlet extends HttpServlet {
 		} else {
 			fromID = URLDecoder.decode(fromID, "UTF-8");
 			toID = URLDecoder.decode(toID, "UTF-8");
+			
+			/* 본인이 아닌경우에는 메세지 보낼 수 없도록  */
+			HttpSession session = request.getSession();
+			if( !fromID.equals((String) session.getAttribute("userID"))) {
+				response.getWriter().write("");
+				return;
+			}
+			
 			chatContent = URLDecoder.decode(chatContent, "UTF-8");
 			response.getWriter().write(new ChatDAO().submit(fromID, toID, chatContent) + "");	// submit
 		}

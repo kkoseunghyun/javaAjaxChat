@@ -17,6 +17,7 @@
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="js/bootstrap.js"></script>
 	<script type="text/javascript">
+		/* 상단 내비게이션 메세지함 unread 라벨 표시 */
 		function getUnread() {
 			$.ajax({
 				type: "POST",
@@ -97,7 +98,6 @@
 
 	<%
 		/*
-			ex)
 			UserRegisterServlet.java, UserLoginServlet에서 session.setAttribute로 정의한 
 			messageContent,messageType 을 session.getAttribute를 통해 가져와서, 색깔셋팅 등 messageModal 설정부분
 		*/

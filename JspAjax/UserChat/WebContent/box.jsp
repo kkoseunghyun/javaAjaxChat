@@ -23,6 +23,7 @@
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="js/bootstrap.js"></script>
 	<script type="text/javascript">
+		/* 상단 내비게이션 메세지함 unread 라벨 표시 */
 		function getUnread() {
 			$.ajax({
 				type: "POST",
@@ -47,6 +48,7 @@
 		function showUnread(result) {
 			$('#unread').html(result);
 		}
+		/* 메세지함의 메세지 박스 설정 */
 		function chatBoxFunction() {
 			var userID = '<%= userID %>';
 			$.ajax({
@@ -78,6 +80,7 @@
 					'<td style="width: 150px;"><h5>' + lastID + '</h5></td>' +
 					'<td>' +
 					'<h5>' + chatContent + 
+					'&nbsp' +
 					'<span class="label label-info">' + unread + '</span></h5>' +
 					'<div class="pull-right">' + chatTime + '</div>' +
 					'</td>' +
@@ -138,11 +141,6 @@
 	</div>
 
 	<%
-		/*
-			ex)
-			UserRegisterServlet.java, UserLoginServlet에서 session.setAttribute로 정의한 
-			messageContent,messageType 을 session.getAttribute를 통해 가져와서, 색깔셋팅 등 messageModal 설정부분
-		*/
 		String messageContent = null;
 		if (session.getAttribute("messageContent") != null) {
 			messageContent = (String) session.getAttribute("messageContent");

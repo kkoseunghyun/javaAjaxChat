@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -26,6 +27,13 @@ public class ChatBoxServlet extends HttpServlet {
 			response.getWriter().write("");
 		} else {
 			try {
+				/* 본인이 아닌경우에는 채팅박스 볼 수 없도록 */
+				HttpSession session = request.getSession();
+				if( !userID.equals((String) session.getAttribute("userID"))) {
+					response.getWriter().write("");
+					return;
+				}
+				
 				userID = URLDecoder.decode(userID, "UTF-8");
 				response.getWriter().write(getBox(userID)); // getBox()
 			} catch (Exception e) {

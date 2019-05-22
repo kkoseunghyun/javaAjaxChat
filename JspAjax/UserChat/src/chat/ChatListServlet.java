@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -16,7 +17,7 @@ import org.json.simple.JSONObject;
 @WebServlet("/ChatListServlet")
 public class ChatListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    
 	/**
 	 * ChatListServlet
 	 * : (Ajax통신을 이용해서) 두명의 사용자가 주고받은 대화를 반환해주는 역할
@@ -27,7 +28,7 @@ public class ChatListServlet extends HttpServlet {
 		
 		String fromID = request.getParameter("fromID");
 		String toID = request.getParameter("toID");
-		String listType = request.getParameter("listType"); // chat.jsp 의 chatListFuction()에서 쓰인것을 가져오는것
+		String listType = request.getParameter("listType");
 		
 		if(fromID == null || fromID.equals("") || toID == null || toID.equals("") 
 				|| listType == null || listType.equals(""))
@@ -36,6 +37,13 @@ public class ChatListServlet extends HttpServlet {
 			response.getWriter().write(getTen(URLDecoder.decode(fromID, "UTF-8"),URLDecoder.decode(toID, "UTF-8"))); // getTen 함수호출 (+디코딩)
 		else {
 			try {
+				/* 본인이 아닌경우에는 채팅 리스트 볼 수 없도록  */
+				HttpSession session = request.getSession();
+				if(!fromID.equals((String) session.getAttribute("userID"))) {
+					response.getWriter().write("");
+					return;
+				}
+				
 				response.getWriter().write(getID(URLDecoder.decode(fromID, "UTF-8"),URLDecoder.decode(toID, "UTF-8"),listType));	// getID 함수호출 (+디코딩) 
 			} catch (Exception e) {
 				response.getWriter().write("");
