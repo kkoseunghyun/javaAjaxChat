@@ -1,0 +1,89 @@
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+/* 전체 영역 지정 */
+* {
+    font-family: 'Nanum Gothic';
+}
+/* 전체 링크 영역 지정 */
+a {
+    color: #000000;
+    text-decoration: none;
+}
+a:hover{
+    color: #bbbbbb;
+    text-decoration:none;
+    cursor: pointer;
+}
+
+/* 네비게이션 영역 */
+.navbar-default{    /* 배경 색상*/
+    background-color: #585858;
+    border-color: #6E6E6E;
+    font-family: 'Noto Sans KR';
+}
+.navbar-default .navbar-brand{ /* 내비게이션 제목 생상 */
+    color: #ffffff;
+    padding-top: 25px;
+    font-family: 'Hanna';
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus{ /*내비게이션 제목에 마우스를 올렸을 때 */
+    background-color: transparent;
+    color: #FE9A2E;
+}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus{/* 현재 선택된 내비게이션 색상 이벤트 */
+    color: #FE9A2E;
+    background-color: #424242;
+}
+.navbar-default .navbar-nav > li > a { /*내비게이션 기본 글자 색상 */
+	color: #ffffff;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus { /*내비게이션의 글자에 마우스를 올렸을 때 */
+    color: #FE9A2E;
+}
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus{ /* .open : 드랍다운이 열렸을 때 마우스 색상 이벤트  */
+    color: #006DCC;
+    background-color: #ffffff;
+    text-decoration: none;
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus { /* 토글에 마우스를 올렸을 때 */
+	background-color: #FE9A2E;
+}
+.navbar-default .navbar-toggle: .icon-bar { /* 토글 아이콘 바 색상 */
+	background-color: #dddddd;
+}
+
+/* 미디어 쿼리 */
+@media (max-width: 767px) { /* 화면 너비 767 이하일때 적용 */
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+        color: #ffffff;
+    }
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+        color: #eeeeee;
+    }
+}
+/* 네비게이션 바 길이 수정 */
+.navbar-fixed-top {
+	min-height: 70px;
+}
+.navbar-nav > li > a {
+	padding-top: 0px;
+	padding-bottom: 0px;
+	line-height: 70px;
+}
+@media (max-width: 767px) { /* 화면 너비 767 이하일때 적용 */
+	.navbar-default .navbar-brand {
+		padding-top: 15px;
+	}
+	.navbar-nav > li > a {
+		padding-top: 0px;
+		padding-bottom: 0px;
+		line-height: 40px;
+	}
+}

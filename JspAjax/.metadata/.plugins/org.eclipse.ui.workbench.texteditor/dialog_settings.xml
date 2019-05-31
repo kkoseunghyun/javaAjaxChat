@@ -2,27 +2,27 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="meta" key="selection"/>
+		<item value="#006DCC" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="#006DCC"/>
+			<item value="toggle"/>
+			<item value="toggel"/>
+			<item value="active"/>
+			<item value="brand"/>
+			<item value="scroll"/>
+			<item value="unread"/>
 			<item value="meta"/>
 			<item value="nanum"/>
 			<item value="autoClosing"/>
 			<item value="font"/>
-			<item value="active"/>
 			<item value="chatListF"/>
 			<item value="submit"/>
 			<item value="findID"/>
 			<item value="chatContent"/>
-			<item value="toID"/>
-			<item value="panel-war"/>
-			<item value="chatListFunc"/>
-			<item value="submitFunc"/>
-			<item value="getInfi"/>
-			<item value="last"/>
 		</list>
 		<list key="replacehistory">
 		</list>

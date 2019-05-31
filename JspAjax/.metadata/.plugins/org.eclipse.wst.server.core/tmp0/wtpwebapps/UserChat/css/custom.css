@@ -177,7 +177,7 @@ tr th:last-child {
     color: #333;
     background-color: #fff;
 }
-@media(min-width:768px) { /* 반응형 */
+@media(min-width:768px) { /* 화면 너비 768 이하일때 적용 */
     .portlet {
         margin-bottom: 30px;
     }
