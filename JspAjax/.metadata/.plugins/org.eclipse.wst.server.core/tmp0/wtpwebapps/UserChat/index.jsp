@@ -95,7 +95,11 @@
 			%>
 		</div>
 	</nav>
-
+	<div class="container">
+		<div style="width:100%; height:160px; line-height:160px; text-align: center;">
+			<p>이미지 준비중..</p>
+		</div>
+	</div>
 	<%
 		/*
 			UserRegisterServlet.java, UserLoginServlet에서 session.setAttribute로 정의한 

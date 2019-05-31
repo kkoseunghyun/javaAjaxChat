@@ -1,7 +1,8 @@
 @import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+@font-face { font-family: 'yg-jalnan'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff'); font-weight: normal; font-style: normal; }
 /* 전체 영역 지정 */
 * {
-    font-family: 'Nanum Gothic';
+	font-family: 'Nanum Gothic';
 }
 /* 전체 링크 영역 지정 */
 a {
@@ -21,8 +22,9 @@ a:hover{
 }
 .navbar-default .navbar-brand{ /* 내비게이션 제목 생상 */
     color: #ffffff;
-    padding-top: 25px;
-    font-family: 'Hanna';
+    padding-top: 30px;
+    font-family: 'yg-jalnan';
+    font-size: 1.5em;
 }
 .navbar-default .navbar-brand:hover,
 .navbar-default .navbar-brand:focus{ /*내비게이션 제목에 마우스를 올렸을 때 */
@@ -79,7 +81,7 @@ a:hover{
 }
 @media (max-width: 767px) { /* 화면 너비 767 이하일때 적용 */
 	.navbar-default .navbar-brand {
-		padding-top: 15px;
+		padding-top: 20px;
 	}
 	.navbar-nav > li > a {
 		padding-top: 0px;
