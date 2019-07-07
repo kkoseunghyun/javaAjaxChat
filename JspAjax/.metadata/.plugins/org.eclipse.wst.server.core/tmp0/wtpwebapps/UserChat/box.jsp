@@ -61,7 +61,7 @@
 					if(data == "") return;
 					console.log(data);
 					$('#boxTable').html('');
-					var parsed = JSON.parse(data);
+					var parsed = JSON.parse(data); // JSON형식을 파싱한다
 					var result = parsed.result;
 					
 					for (var i = 0; i < result.length; i++) {
@@ -70,14 +70,16 @@
 						} else {
 							result[i][0].value2 = result[i][0].value1;
 						}
-						addBox(result[i][0].value1, result[i][0].value2, result[i][0].value3, result[i][0].value4, result[i][0].value5);
+						addBox(result[i][0].value1, result[i][0].value2, result[i][0].value3, result[i][0].value4, result[i][0].value5, result[i][0].value6);
 					}
 				}
 			});
 		}
-		function addBox(lastID, toId, chatContent, chatTime, unread) {
+		function addBox(lastID, toId, chatContent, chatTime, unread, profile) {
 			$('#boxTable').append('<tr onclick="location.href=\'chat.jsp?toID=' + toId + '\'">' +
-					'<td style="width: 150px;"><h5>' + lastID + '</h5></td>' +
+					'<td style="width: 150px;">' +
+					'<img class="media-object img-circle" style="margin: 0 auto; max-width: 40px; max-height: 40px;" src="' + profile + '"></img>' +
+					'<h5>' + lastID + '</h5></td>' +
 					'<td>' +
 					'<h5>' + chatContent + 
 					'&nbsp' +
@@ -118,6 +120,7 @@
 						aria-expanded="false">회원관리<span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a href="update.jsp">회원정보수정</a></li>
+						<li><a href="profileUpdate.jsp">프로필 사진 수정</a></li>
 						<li><a href="logoutAction.jsp">로그아웃</a></li>
 					</ul>
 				</li>	

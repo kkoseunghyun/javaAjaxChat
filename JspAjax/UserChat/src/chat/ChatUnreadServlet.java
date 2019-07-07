@@ -26,7 +26,7 @@ public class ChatUnreadServlet extends HttpServlet {
 			
 			/* 본인이 아닌경우에는 채팅박스 볼 수 없도록 */
 			HttpSession session = request.getSession();
-			if( !userID.equals((String) session.getAttribute("userID"))) {
+			if(!URLDecoder.decode(userID, "UTF-8").equals((String) session.getAttribute("userID"))) {
 				response.getWriter().write("");
 				return;
 			}

@@ -41,7 +41,7 @@ public class UserRegisterServlet extends HttpServlet {
 			return;
 		}
 		// 모든 예외처리를 통과한 후
-		int result = new UserDAO().register(userID, userPassword1, userName, userAge, userGender, userEmail, userProfile);
+		int result = new UserDAO().register(userID, userPassword1, userName, userAge, userGender, userEmail, ""); // 처음가입했을때, userProfile은 ""
 		if(result == 1) {
 			request.getSession().setAttribute("userID", userID);	// 회원가입을 성공했을때, 자동으로 로그인이 되도록 session값으로 userID를 넣어줌 (로그인을 하면 각자의 session이 생기는 원리)
 			request.getSession().setAttribute("messageType", "성공 메세지");

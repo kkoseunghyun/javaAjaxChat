@@ -88,6 +88,7 @@
 						aria-expanded="false">회원관리<span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li class="active"><a href="update.jsp">회원정보수정</a></li>
+						<li><a href="profileUpdate.jsp">프로필 사진 수정</a></li>
 						<li><a href="logoutAction.jsp">로그아웃</a></li>
 					</ul>
 				</li>	
@@ -146,7 +147,7 @@
 					<tr>
 						<td style="text-align: left;" colspan="3">
 							<h5 style="color: red;" id="passwordCheckMessage"></h5>					<!--  id: passwordCheckMessage -->
-							<input class="btn btn-primary pull-right" type="submit" value="등록">		<!--  '등록' 버튼 -->
+							<input class="btn btn-primary pull-right" type="submit" value="수정">		<!--  '등록' 버튼 -->
 						</td>
 					</tr>
 				</tbody>

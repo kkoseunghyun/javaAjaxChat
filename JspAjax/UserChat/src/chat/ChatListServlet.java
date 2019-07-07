@@ -39,7 +39,7 @@ public class ChatListServlet extends HttpServlet {
 			try {
 				/* 본인이 아닌경우에는 채팅 리스트 볼 수 없도록  */
 				HttpSession session = request.getSession();
-				if(!fromID.equals((String) session.getAttribute("userID"))) {
+				if(!URLDecoder.decode(fromID, "UTF-8").equals((String) session.getAttribute("userID"))) {
 					response.getWriter().write("");
 					return;
 				}

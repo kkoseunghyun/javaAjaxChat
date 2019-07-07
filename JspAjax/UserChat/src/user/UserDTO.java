@@ -12,7 +12,7 @@ public class UserDTO {
 	int userAge;
 	String userGender;
 	String userEmail;
-	String userProfile;		// 프로필 사진 (필수 아님)
+	String userProfile;		// 프로필 사진경로
 	
 	public String getUserID() {
 		return userID;

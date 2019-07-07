@@ -14,6 +14,8 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import user.UserDAO;
+
 @WebServlet("/ChatBoxServlet")
 public class ChatBoxServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -23,13 +25,14 @@ public class ChatBoxServlet extends HttpServlet {
 		response.setContentType("text/html; chatset=UTF-8");
 		
 		String userID = request.getParameter("userID");
+		
 		if(userID == null || userID.equals("")) {
 			response.getWriter().write("");
 		} else {
 			try {
 				/* 본인이 아닌경우에는 채팅박스 볼 수 없도록 */
 				HttpSession session = request.getSession();
-				if( !userID.equals((String) session.getAttribute("userID"))) {
+				if(!URLDecoder.decode(userID, "UTF-8").equals((String) session.getAttribute("userID"))) {
 					response.getWriter().write("");
 					return;
 				}
@@ -53,11 +56,23 @@ public class ChatBoxServlet extends HttpServlet {
 		JSONArray arr = new JSONArray();
 		
 		for(int i = chatList.size() - 1; i>=0 ; i--) { // 내림차순 정렬
+			
 			String unread = "";
+			String userProfile ="";
+			
 			int getUnread = chatDAO.getUnreadChat(chatList.get(i).getFromID(), userID); // 안읽씹 메세지 갯수
-			if(userID.equals(chatList.get(i).getToID())) { // 메세지받는 사람이 자기자신이라면 
-				unread = Integer.toString(getUnread); // unread label 설정해주기위한 unread 변수 설정
+			
+			// unread 라벨 설정 
+			if(userID.equals(chatList.get(i).getToID())) { // 메세지받는 사람이 자기자신 이라면 
+				unread = Integer.toString(getUnread); // unread label을 설정해주기위한 unread 변수 설정
 				if(unread.equals("0")) unread = ""; // 안읽은게 없으면 비워주기
+			}
+			// 메세지함 프로필 사진 설정
+			if(userID.equals(chatList.get(i).getToID())) { // 메세지 받는 사람이 자기자신 이라면
+				userProfile = new UserDAO().getProfile(chatList.get(i).getFromID()); // 메세지 보낸 사람의 프로필 사진
+			}
+			else {
+				userProfile = new UserDAO().getProfile(chatList.get(i).getToID());
 			}
 			
 			JSONArray arr2 = new JSONArray();
@@ -68,6 +83,7 @@ public class ChatBoxServlet extends HttpServlet {
 			obj2.put("value3", chatList.get(i).getChatContent());
 			obj2.put("value4", chatList.get(i).getChatTime());
 			obj2.put("value5", unread);
+			obj2.put("value6", userProfile);
 			arr2.add(obj2);
 			
 			
