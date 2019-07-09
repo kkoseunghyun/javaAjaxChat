@@ -113,7 +113,7 @@
 						'<div class="col-lg-12">' +
 						'<div class="media">' +
 						'<a class="pull-left" href="#">' +
-						'<img class="media-object img-circle" style="width:30px; height:30px;" src="<%= fromProfile %>" alt="">' +
+						'<img class="media-object img-circle" style="width:50px; height:50px;" src="<%= fromProfile %>" alt="">' +
 						'</a>' +
 						'<div class="media-body">' +
 						'<h4 class="media-heading">' +
@@ -136,7 +136,7 @@
 						'<div class="col-lg-12">' +
 						'<div class="media">' +
 						'<a class="pull-left" href="#">' +
-						'<img class="media-object img-circle" style="width:30px; height:30px;" src="<%= toProfile %>" alt="">' +
+						'<img class="media-object img-circle" style="width:50px; height:50px;" src="<%= toProfile %>" alt="">' +
 						'</a>' +
 						'<div class="media-body">' +
 						'<h4 class="media-heading">' +
@@ -208,6 +208,7 @@
 				<li class="active"><a href="index.jsp">메인</a></li>
 				<li><a href="find.jsp">친구찾기</a></li>
 				<li><a href="box.jsp">메세지함<span id="unread" class="label label-info"></span></a></li>
+				<li><a href="boardView.jsp">자유게시판</a></li>
 			</ul>
 			<%
 				if(userID != null) {

@@ -1,0 +1,29 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="board.BoardDAO" %>
+<%@ page import="java.io.*" %>
+<%@ page import="java.text.*" %>
+<%@ page import="java.lang.*" %>
+<%@ page import="java.util.*" %>
+<%@ page import="java.net.*" %>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>JSP Ajax 실시간 회원제 채팅 서비스</title>
+</head>
+<body>
+	<%
+		request.setCharacterEncoding("UTF-8");
+		String boardID = request.getParameter("boardID");
+		if(boardID == null || boardID.equals("")) {
+			session.setAttribute("messageType", "오류 메세지");
+			session.setAttribute("messageContent", "접근할 수 없습니다."); 
+			response.sendRedirect("index.jsp");	
+			return;
+		}
+	%>
+	<script>
+		location.href = 'index.jsp';
+	</script>
+</body>
+</html>

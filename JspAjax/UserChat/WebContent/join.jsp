@@ -70,6 +70,7 @@
 			<ul class="nav navbar-nav">
 				<li class="active"><a href="index.jsp">메인</a></li>
 				<li><a href="find.jsp">친구찾기</a></li>
+				<li><a href="boardView.jsp">자유게시판</a></li>
 			</ul>
 			<%
 				if(userID == null){ // 로그인이 안된사람들에 한해 보여지는 네비게이션 바

@@ -1,0 +1,20 @@
+package board;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
+public class BoardDAO {
+
+	DataSource dataSource;
+	
+	public BoardDAO() { //context.xml에서 설정한 JNDI를 이용. 이 객체는 이제 Container의 DBCP에 의해 관리된다.
+		try {
+			InitialContext initContext = new InitialContext();
+			Context envContext = (Context) initContext.lookup("java:/comp/env");
+			dataSource = (DataSource) envContext.lookup("jdbc/UserChat");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+}
