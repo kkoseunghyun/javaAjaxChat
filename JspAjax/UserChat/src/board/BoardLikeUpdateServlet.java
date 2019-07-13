@@ -27,6 +27,7 @@ public class BoardLikeUpdateServlet extends HttpServlet {
 		
 		String boardID = request.getParameter("boardID");
 		
+		/* 예외처리 */
 		if(boardID == null || boardID.equals("")) {
 			request.getSession().setAttribute("messageType", "오류 메세지");
 			request.getSession().setAttribute("messageContent", "boardID 오류");
@@ -34,10 +35,22 @@ public class BoardLikeUpdateServlet extends HttpServlet {
 			return;
 		}
 		
-		// 좋아요 개수 증가 
 		BoardDAO boardDAO = new BoardDAO();
-		boardDAO.likeUpdate(boardID);
 		
+		HttpSession session = request.getSession();
+		String userID = (String) session.getAttribute("userID"); 
+		
+		BoardDTO board = boardDAO.getBoard(boardID);
+		
+		/* 본인 게시글에는 추천을 할 수 없도록 */
+		if(userID.equals(board.getUserID())) {
+			request.getSession().setAttribute("messageType", "오류 메세지");
+			request.getSession().setAttribute("messageContent", "본인 글에는 추천할 수 없습니다.");
+			response.sendRedirect("boardShow.jsp?boardID=" + boardID);
+			return;
+		}
+		
+		boardDAO.likeUpdate(boardID);
 		request.getSession().setAttribute("messageType", "성공 메세지");
 		request.getSession().setAttribute("messageContent", "추천!");
 		response.sendRedirect("boardShow.jsp?boardID=" + boardID);

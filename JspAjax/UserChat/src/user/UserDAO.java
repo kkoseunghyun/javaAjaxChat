@@ -22,6 +22,7 @@ public class UserDAO {
 		}
 	}
 	
+	/* 로그인 성공 여부 메서드 */
 	public int login(String userID, String userPassword) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -54,7 +55,8 @@ public class UserDAO {
 		return -1; // 데이터베이스 오류
 	}
 	
-	public int registerCheck(String userID) { // 아이디 중복체크
+	/* 회원가입 아이디 중복체크 */
+	public int registerCheck(String userID) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -82,7 +84,7 @@ public class UserDAO {
 		}
 		return -1; // 데이터베이스 오류
 	}
-	
+	/* 회원가입 메서드 */
 	public int register(String userID, String userPassword, String userName, String userAge, String userGender, String userEmail, String userProfile) { // 아이디 중복체크
 		Connection conn = null;
 		PreparedStatement pstmt = null;

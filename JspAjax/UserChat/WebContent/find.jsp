@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="user.UserDAO" %>
 <!DOCTYPE html>
 <html>
 	<%
@@ -12,6 +13,9 @@
 			response.sendRedirect("index.jsp");
 			return;
 		}
+		
+		UserDAO userDAO = new UserDAO();
+		String userProfile = userDAO.getProfile(userID); // profile의 경로를 가져오는 메서드
 	%>
 <head>
 	<meta charset="UTF-8">
@@ -127,6 +131,9 @@
 						<li><a href="logoutAction.jsp">로그아웃</a></li>
 					</ul>
 				</li>	
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="userStatus.jsp"><img class=".media-object img-circle" style="media-object: display:none; margin: 0 auto; max-width: 50px; max-height: 50px;" src="<%= userProfile %>"></img></a></li>
 			</ul>
 			<%
 				}

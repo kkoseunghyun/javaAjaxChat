@@ -20,6 +20,9 @@
 	String boardUser = board.getUserID();
 	String fromProfile = new UserDAO().getProfile(boardUser); // 게시물 작성자의 사진
 	
+	UserDAO userDAO = new UserDAO();
+	String userProfile = userDAO.getProfile(userID); // profile의 경로를 가져오는 메서드
+	
 %>
 <head>
 	<meta charset="UTF-8">
@@ -57,24 +60,7 @@
 			$('#unread').html(result);
 		}
 		
-		/* 좋아요 증가 함수 */
-		
 		var boardID = '<%= boardID %>';
-		
-		/*
-		$('#like').click(function() {
-			$.ajax({
-				type: "POST",
-				url: "./boardLikeUpdate",
-				data: {boardID: boardID},
-				success: function(result) {
-					alert('추천!');
-					getLike();
-				}
-				
-			});
-		});
-		*/
 		
 		/* 좋아요 개수 표시 함수 */
 		function getLike() {
@@ -151,6 +137,9 @@
 					</ul>
 				</li>	
 			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="userStatus.jsp"><img class=".media-object img-circle" style="media-object: display:none; margin: 0 auto; max-width: 50px; max-height: 50px;" src="<%= userProfile %>"></img></a></li>
+			</ul>
 			<%
 				}
 			%>
@@ -188,8 +177,7 @@
 			<tbody>
 				<tr>
 					<td colspan="5">
-						<a href="boardLikeUpdate?boardID=<%= board.getBoardID() %>" class="btn btn-primary">좋아요</a>
-						<span id="likeNumber" class="label label-info"></span>
+						<a href="boardLikeUpdate?boardID=<%= board.getBoardID() %>" class="btn btn-primary" style="background-color:white; color:black;">좋아요 <span id="likeNumber"></span></a>
 					</td>
 				</tr>
 				<tr>
