@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="board.BoardDAO" %>
 <%@ page import="board.BoardDTO" %>
+<%@ page import="user.UserDAO" %>
 <!DOCTYPE html>
 <html>
 <%
@@ -14,7 +15,11 @@
 	}
 	BoardDAO boardDAO = new BoardDAO();
 	BoardDTO board = boardDAO.getBoard(boardID); // 하나의 게시물에 대한 정보 가져오기
-	boardDAO.hit(boardID); // 조회수 +1
+	boardDAO.hit(boardID); // 게시물 들어올때마다 조회수 +1
+	
+	String boardUser = board.getUserID();
+	String fromProfile = new UserDAO().getProfile(boardUser); // 게시물 작성자의 사진
+	
 %>
 <head>
 	<meta charset="UTF-8">
@@ -50,6 +55,51 @@
 		}
 		function showUnread(result) {
 			$('#unread').html(result);
+		}
+		
+		/* 좋아요 증가 함수 */
+		
+		var boardID = '<%= boardID %>';
+		
+		/*
+		$('#like').click(function() {
+			$.ajax({
+				type: "POST",
+				url: "./boardLikeUpdate",
+				data: {boardID: boardID},
+				success: function(result) {
+					alert('추천!');
+					getLike();
+				}
+				
+			});
+		});
+		*/
+		
+		/* 좋아요 개수 표시 함수 */
+		function getLike() {
+			$.ajax({
+				type: "POST",
+				url: "./boardLike",
+				data: {boardID: boardID},
+				success: function(result) {
+					if(result >= 0) {
+						showLikeNumber(result); // result = 좋아요 개수 
+					}
+					else {
+						console.log(boardID);
+					}
+				}
+				
+			});
+		}
+		function showLikeNumber(result) {
+			$('#likeNumber').html(result);
+		}
+		function getInfiniteLike() {
+			setInterval(function() {
+				getLike();
+			}, 4000);
 		}
 	</script>
 </head>
@@ -118,10 +168,10 @@
 				</tr>
 				<tr>
 					<td style="background-color: #fafafa; color: #000000; width: 80px;"><h5>작성자</h5></td>
-					<td colspan="3"><h5><%= board.getUserID() %></h5></td>
+					<td colspan="3"><h5><img class="media-object img-circle" style="margin: 0 auto; max-width: 40px; max-height: 40px;" src="<%= fromProfile %>"></img><%= board.getUserID() %></h5></td>
 				</tr>
 				<tr>
-					<td style="background-color: #fafafa; color: #000000; width: 80px;"><h5>작성날짜</h5></td>
+					<td style="background-color: #fafafa; color: #000000; width: 100px;"><h5>작성날짜</h5></td>
 					<td><h5><%= board.getBoardDate() %></h5></td>
 					<td style="background-color: #fafafa; color: #000000; width: 80px;"><h5>조회수</h5></td>
 					<td><h5><%= board.getBoardHit() %></h5></td>
@@ -137,14 +187,19 @@
 			</thead>
 			<tbody>
 				<tr>
+					<td colspan="5">
+						<a href="boardLikeUpdate?boardID=<%= board.getBoardID() %>" class="btn btn-primary">좋아요</a>
+						<span id="likeNumber" class="label label-info"></span>
+					</td>
+				</tr>
+				<tr>
 					<td colspan="5" style="text-align: right;">
-						<a href="boardUpdate.jsp?boardID=<%= board.getBoardID() %>" class="btn btn-primary">수정</a>
 						<a href="boardView.jsp" class="btn btn-primary">목록</a>
-						<a href="boardReply.jsp?boardID=<%= board.getBoardID() %>" class="btn btn-primary">답변</a>
 						<%
-							if(userID.equals(board.getUserID())) {	
+							if(userID.equals(board.getUserID())) { // 작성자 본인만 볼 수 있는 버튼들 
 						%>
-							<a href="boardDelete.jsp?boardID=<%= board.getBoardID() %>" class="btn btn-primary">삭제</a>
+							<a href="boardUpdate.jsp?boardID=<%= board.getBoardID() %>" class="btn btn-primary">수정</a>
+							<a href="boardDelete?boardID=<%= board.getBoardID() %>" class="btn btn-primary" onclick="return confirm('정말로 삭제하시겠습니까?')">삭제</a>
 						<%
 							}
 						%>
@@ -207,6 +262,8 @@
 			$(document).ready(function() {
 				getUnread(); // 4초 안기다리고 바로 볼 수 있게 먼저해놓음 
 				getInfiniteUnread();
+				getLike();
+				getInfiniteLike();
 			});
 		</script>
 	<%

@@ -5,7 +5,10 @@
 <%@ page import="java.lang.*" %>
 <%@ page import="java.util.*" %>
 <%@ page import="java.net.*" %>
-<!DOCTYPE html>
+
+<!-- 천하제일 타자 대회 -->
+
+<!DOCTYPE html> 
 <html>
 <head>
 	<meta charset="UTF-8">

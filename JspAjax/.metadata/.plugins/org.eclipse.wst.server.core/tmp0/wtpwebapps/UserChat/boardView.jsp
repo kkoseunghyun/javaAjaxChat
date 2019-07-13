@@ -9,8 +9,26 @@
 	if(session.getAttribute("userID") != null){
 		userID = (String) session.getAttribute("userID");
 	}
+	if(userID == null) {
+		session.setAttribute("messageType", "오류 메세지");
+		session.setAttribute("messageContent", "현재 로그인이 되어 있지 않습니다."); 
+		response.sendRedirect("index.jsp");	
+		return;
+	}
 	
-	ArrayList<BoardDTO> boardList = new BoardDAO().getList();
+	String pageNumber = "1";
+	if(request.getParameter("pageNumber") != null) {
+		pageNumber = request.getParameter("pageNumber");
+	}
+	try {
+		Integer.parseInt(pageNumber);
+	} catch (Exception e) {
+		session.setAttribute("messageType", "오류 메세지");
+		session.setAttribute("messageContent", "페이지 번호가 올바르지 않습니다."); 
+		response.sendRedirect("index.jsp");	
+		return;
+	}
+	ArrayList<BoardDTO> boardList = new BoardDAO().getList(pageNumber);
 %>
 <head>
 	<meta charset="UTF-8">
@@ -68,23 +86,6 @@
 				<li><a href="box.jsp">메세지함<span id="unread" class="label label-info"></span></a></li>
 				<li class="active"><a href="boardView.jsp">자유게시판</a></li>
 			</ul>
-			<%
-				if(userID == null){ // 로그인이 안된사람들에 한해 보여지는 네비게이션 바
-			%>
-			<ul class="nav navbar-nav navbar-right">
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-haspopup="true"
-						aria-expanded="false">접속하기<span class="caret"></span></a>
-					<ul class="dropdown-menu">
-						<li><a href="login.jsp">로그인</a></li>
-						<li><a href="join.jsp">회원가입</a></li>
-					</ul>
-				</li>	
-			</ul>
-			<%
-				} else {
-			%>
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle"
@@ -97,9 +98,6 @@
 					</ul>
 				</li>	
 			</ul>
-			<%
-				}
-			%>
 		</div>
 	</nav>
 	<div class="container">
@@ -109,7 +107,7 @@
 					<th colspan="5"><h4>자유게시판</h4></th>
 				</tr>
 				<tr>
-					<th style="background-color: #fafafa; color: #000000; width: 70px;"><h5>번호</h5></th> 
+					<th style="font-weight: bold; background-color: #fafafa; color: #000000; width: 70px;"><h5>번호</h5></th> 
 					<th style="background-color: #fafafa; color: #000000;"><h5>제목</h5></th> 
 					<th style="background-color: #fafafa; color: #000000;"><h5>작성자</h5></th> 
 					<th style="background-color: #fafafa; color: #000000; width: 100px;"><h5>작성날짜</h5></th> 
@@ -132,7 +130,55 @@
 				}
 			%>
 				<tr>
-					<td colspan="5"><a href="boardWrite.jsp" class="btn btn-primary pull-right" type="submit">글쓰기</a></td>
+					<td colspan="5">
+						<a href="boardWrite.jsp" class="btn btn-primary pull-right" type="submit">글쓰기</a>
+						<ul class="pagination" style="margin: 0 auto;"> <!-- 부트스트랩 : 페이지네이션 <ul> 태그로 제공 -->
+					<%
+						int startPage = (Integer.parseInt(pageNumber) / 3) * 3 + 1; // 1,2,3페이지 까지는 startPage = 1, 4 페이지 부터는 startPage = 4
+						if(Integer.parseInt(pageNumber) % 3 == 0) startPage -= 3;
+						int targetPage = new BoardDAO().targetPage(pageNumber); // targetPage 개수 (현재 페이지 포함, 앞으로 처리할 페이지 개수)
+						
+						/* [왼쪽 버튼] '<' 버튼 누르면 startPage -1 으로 넘어간다 */
+						if(startPage != 1) { 
+					%>
+							<li><a href="boardView.jsp?pageNumber=<%= startPage - 1 %>"><span class="glyphicon glyphicon-chevron-left" style="color: orange;"></span></a></li>
+					<%
+						} else {
+					%>
+							<li><span class="glyphicon glyphicon-chevron-left" style="color: orange;"></span></li>
+					<%
+						}
+						/* [현재 페이지] startPage부터 현재페이지 넘버 이전까지의 버튼 */
+						for(int i = startPage; i < Integer.parseInt(pageNumber); i++) {
+					%>
+							<li><a href="boardView.jsp?pageNumber=<%= i %>"><%= i %></a></li>
+					<%
+						} /* [현재 페이지] 현재 페이지 넘버 버튼*/
+					%>
+						<li class="active"><a href="boardView.jsp?pageNumber=<%= pageNumber %>"><%= pageNumber %></a></li>
+					<%
+						/* [현재 페이지] 현재 페이지 넘버 다음부터의 버튼 */
+						for(int i = Integer.parseInt(pageNumber) + 1; i < targetPage + Integer.parseInt(pageNumber); i++) {
+							/* startPage + 3 의 범위를 넘지않는 버튼에 한해서만 */
+							if(i < startPage + 3) { 
+					%>
+								<li><a href="boardView.jsp?pageNumber=<%= i %>"><%= i %></a></li>
+					<%
+							}
+						}
+						/* [오른쪽 버튼] 현재 페이지에서 처리할 페이지가 startPage + 3 인것부터는 '>' 버튼 누르면 startPage + 3 으로 넘어간다  */
+						if(targetPage + Integer.parseInt(pageNumber) > startPage + 2) {	
+					%>	
+							<li><a href="boardView.jsp?pageNumber=<%= startPage + 3 %>"><span class="glyphicon glyphicon-chevron-right" style="color: orange;"></span></a></li>
+					<%
+						} else { 
+					%>
+							<li><span class="glyphicon glyphicon-chevron-right" style="color: orange;"></span></li>
+					<%
+						}
+					%>
+						</ul>
+					</td>
 				</tr>
 			</tbody>
 		</table>

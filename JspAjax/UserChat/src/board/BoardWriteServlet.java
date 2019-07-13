@@ -30,20 +30,20 @@ public class BoardWriteServlet extends HttpServlet {
 		} catch (Exception e) {
 			request.getSession().setAttribute("messageType", "오류 메세지");
 			request.getSession().setAttribute("messageContent", "파일 크기는 10MB를 넘을 수 없습니다.");
-			response.sendRedirect("profileUpdate.jsp");
+			response.sendRedirect("index.jsp");
 			return;
 		}
 		// 본인이 아니면 접근 할 수 없도록 설정
 		String userID = multi.getParameter("userID");
 		HttpSession session = request.getSession();
 		if(!userID.equals((String) session.getAttribute("userID"))) {
-			request.getSession().setAttribute("messageType", "오류 메세지");
-			request.getSession().setAttribute("messageContent", "접근할 수 없습니다.");
+			session.setAttribute("messageType", "오류 메세지");
+			session.setAttribute("messageContent", "접근할 수 없습니다.");
 			response.sendRedirect("index.jsp");
 			return;
 		}
 		// 내용을 모두 채우지 않았을시 오류메세지 발생 
-		String boardTitle = multi.getParameter("boardContent");
+		String boardTitle = multi.getParameter("boardTitle");
 		String boardContent = multi.getParameter("boardContent");
 		if(boardTitle == null || boardTitle.equals("") || boardContent == null || boardContent.equals("")) {
 			session.setAttribute("messageType", "오류 메세지");

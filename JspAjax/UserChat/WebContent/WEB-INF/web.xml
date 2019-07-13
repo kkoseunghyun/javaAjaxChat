@@ -81,12 +81,44 @@
     <servlet-name>UserProfileServlet</servlet-name>
     <url-pattern>/userProfile</url-pattern>
   </servlet-mapping>
-    <servlet>
+  <servlet>
     <servlet-name>BoardWriteServlet</servlet-name>
     <servlet-class>board.BoardWriteServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>BoardWriteServlet</servlet-name>
     <url-pattern>/boardWrite</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>BoardUpdateServlet</servlet-name>
+    <servlet-class>board.BoardUpdateServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BoardUpdateServlet</servlet-name>
+    <url-pattern>/boardUpdate</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>BoardDeleteServlet</servlet-name>
+    <servlet-class>board.BoardDeleteServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BoardDeleteServlet</servlet-name>
+    <url-pattern>/boardDelete</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>BoardLikeServlet</servlet-name>
+    <servlet-class>board.BoardLikeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BoardLikeServlet</servlet-name>
+    <url-pattern>/boardLike</url-pattern>
+  </servlet-mapping>
+   <servlet>
+    <servlet-name>BoardLikeUpdateServlet</servlet-name>
+    <servlet-class>board.BoardLikeUpdateServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BoardLikeUpdateServlet</servlet-name>
+    <url-pattern>/boardLikeUpdate</url-pattern>
   </servlet-mapping>
 </web-app>

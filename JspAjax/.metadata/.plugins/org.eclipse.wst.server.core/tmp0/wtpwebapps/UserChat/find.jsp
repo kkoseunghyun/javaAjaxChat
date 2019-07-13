@@ -24,7 +24,9 @@
 	<script src="js/bootstrap.js"></script>
 	<script type="text/javascript">
 		function findingFunction() {
+			
 			var userID = $('#findID').val();
+			
 			$.ajax({
 				type: 'POST',
 				url: './UserFindServlet',

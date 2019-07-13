@@ -16,9 +16,10 @@ public class ChatUnreadServlet extends HttpServlet {
    
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html;chatset=UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
 		
 		String userID = request.getParameter("userID");
+		
 		if(userID == null || userID.equals("")) {
 			response.getWriter().write("0");
 		} else {
@@ -31,7 +32,8 @@ public class ChatUnreadServlet extends HttpServlet {
 				return;
 			}
 			
-			response.getWriter().write(new ChatDAO().getAllUnreadChat(userID) + "");
+			// 읽지않은 메세지 개수 반환 
+			response.getWriter().write(new ChatDAO().getAllUnreadChat(userID) + ""); 
 		}
 	}
 

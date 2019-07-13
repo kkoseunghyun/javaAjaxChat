@@ -22,7 +22,7 @@ public class ChatBoxServlet extends HttpServlet {
 			
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html; chatset=UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
 		
 		String userID = request.getParameter("userID");
 		
@@ -60,7 +60,8 @@ public class ChatBoxServlet extends HttpServlet {
 			String unread = "";
 			String userProfile ="";
 			
-			int getUnread = chatDAO.getUnreadChat(chatList.get(i).getFromID(), userID); // 안읽씹 메세지 갯수
+			// 안읽씹 메세지 갯수
+			int getUnread = chatDAO.getUnreadChat(chatList.get(i).getFromID(), userID);
 			
 			// unread 라벨 설정 
 			if(userID.equals(chatList.get(i).getToID())) { // 메세지받는 사람이 자기자신 이라면 

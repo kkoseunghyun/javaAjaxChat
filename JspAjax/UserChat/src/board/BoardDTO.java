@@ -12,6 +12,7 @@ public class BoardDTO {
 	int boardGroup;
 	int boardSequence;
 	int boardLevel;
+	int boardLike; // 좋아요 개수 
 	
 	public String getUserID() {
 		return userID;
@@ -79,6 +80,10 @@ public class BoardDTO {
 	public void setBoardLevel(int boardLevel) {
 		this.boardLevel = boardLevel;
 	}
-	
-	
+	public int getBoardLike() {
+		return boardLike;
+	}
+	public void setBoardLike(int boardLike) {
+		this.boardLike = boardLike;
+	}
 }

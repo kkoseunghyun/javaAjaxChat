@@ -10,7 +10,6 @@ INDEX VERSION 1.131+C:\Users\pym78\Documents\GitHub\javaAjaxChat\JspAjax\.metada
 628019425.index
 1689259093.index
 989341961.index
-2024334712.index
 3141958188.index
 2272273464.index
 1863161248.index

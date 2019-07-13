@@ -32,7 +32,7 @@
 					userID: encodeURIComponent('<%= userID %>'),
 				},
 				success: function(result) {
-					if(result >= 1) {
+					if(result >= 1) { // 읽지않은 메세지 개수가 1개 이상일때
 						showUnread(result);
 					} else {
 						showUnread('');
@@ -40,13 +40,13 @@
 				}
 			});
 		}
+		function showUnread(result) {
+			$('#unread').html(result);
+		}
 		function getInfiniteUnread() {
 			setInterval(function() {
 				getUnread();
 			}, 4000);
-		}
-		function showUnread(result) {
-			$('#unread').html(result);
 		}
 		/* 메세지함의 메세지 박스 설정 */
 		function chatBoxFunction() {

@@ -134,6 +134,7 @@ public class ChatDAO {
 		return chatList;
 	}
 	
+	/* Box의 모든 요소 가져오는 메서드 */
 	public ArrayList<ChatDTO> getBox(String userID) {
 		
 		ArrayList<ChatDTO> chatList = null;
@@ -243,7 +244,7 @@ public class ChatDAO {
 	}
 	
 	/**
-	 * 읽지않은(charRead = 0) 메세지 갯수 반환
+	 * 읽지않은(charRead = 0) 메세지 개수 반환
 	 * */
 	public int getAllUnreadChat(String userID) {
 		Connection conn = null;
