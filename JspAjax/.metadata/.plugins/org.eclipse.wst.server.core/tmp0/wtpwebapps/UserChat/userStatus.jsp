@@ -119,6 +119,10 @@
 					<td style="width: 110px;"><h5>아이디</h5></td>
 					<td><h5><%= user.getUserID() %></h5>
 				</tr>
+				<tr>
+					<td style="width: 110px;"><h5>포인트</h5></td>
+					<td><h5><%= user.getUserPoint() %></h5>
+				</tr>
 			</tbody>
 		</table>
 		

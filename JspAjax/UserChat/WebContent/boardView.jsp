@@ -29,7 +29,8 @@
 		response.sendRedirect("index.jsp");	
 		return;
 	}
-	ArrayList<BoardDTO> boardList = new BoardDAO().getList(pageNumber);
+	
+	ArrayList<BoardDTO> boardList = new BoardDAO().getList(pageNumber); /* 페이지당 게시글 정보를 가져오는 함수 */
 	
 	UserDAO userDAO = new UserDAO();
 	String userProfile = userDAO.getProfile(userID); // profile의 경로를 가져오는 메서드

@@ -91,7 +91,7 @@ public class BoardDAO {
 		return board;
 	}
 	
-	/* 페이지당 게시글 정보를 가져오는 함수 */
+	/* 페이지에 해당하는 게시글 정보를 가져오는 함수 */
 	public ArrayList<BoardDTO> getList(String pageNumber) {
 		ArrayList<BoardDTO> boardList = null;
 		
@@ -104,6 +104,94 @@ public class BoardDAO {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, Integer.parseInt(pageNumber) * 10);
 			pstmt.setInt(2, (Integer.parseInt(pageNumber) -1) * 10);
+			rs = pstmt.executeQuery();
+			boardList = new ArrayList<BoardDTO>();
+			while(rs.next()) {
+				BoardDTO board = new BoardDTO();
+				board.setUserID(rs.getString("userID"));
+				board.setBoardID(rs.getInt("boardID"));
+				board.setBoardTitle(rs.getString("boardTitle").replaceAll(" ", "&nbsp").replaceAll("<", "&lt").replaceAll(">", "&gt").replaceAll("\n", "<br>"));
+				board.setBoardContent(rs.getString("boardContent").replaceAll(" ", "&nbsp").replaceAll("<", "&lt").replaceAll(">", "&gt").replaceAll("\n", "<br>"));
+				board.setBoardDate(rs.getString("boardDate").substring(0, 11));
+				board.setBoardHit(rs.getInt("boardHit"));
+				board.setBoardFile(rs.getString("boardFile"));
+				board.setBoardRealFile(rs.getString("boardRealFile"));
+				board.setBoardGroup(rs.getInt("boardGroup"));
+				board.setBoardSequence(rs.getInt("boardSequence"));
+				board.setBoardLevel(rs.getInt("boardLevel"));
+				board.setBoardLike(rs.getInt("boardLike"));
+				boardList.add(board);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs != null) rs.close();
+				if(pstmt != null) pstmt.close();
+				if(conn != null) conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return boardList;
+	}
+	
+	/* 최신 게시글 5개의 정보를 가져오는 함수 */
+	public ArrayList<BoardDTO> getRecentList() {
+		ArrayList<BoardDTO> boardList = null;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String SQL = "SELECT * FROM BOARD WHERE boardGroup > (SELECT MAX(boardGroup) FROM BOARD) -? ORDER BY boardGroup DESC, boardSequence ASC";
+		try {
+			conn = dataSource.getConnection(); 
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, 5);
+			rs = pstmt.executeQuery();
+			boardList = new ArrayList<BoardDTO>();
+			while(rs.next()) {
+				BoardDTO board = new BoardDTO();
+				board.setUserID(rs.getString("userID"));
+				board.setBoardID(rs.getInt("boardID"));
+				board.setBoardTitle(rs.getString("boardTitle").replaceAll(" ", "&nbsp").replaceAll("<", "&lt").replaceAll(">", "&gt").replaceAll("\n", "<br>"));
+				board.setBoardContent(rs.getString("boardContent").replaceAll(" ", "&nbsp").replaceAll("<", "&lt").replaceAll(">", "&gt").replaceAll("\n", "<br>"));
+				board.setBoardDate(rs.getString("boardDate").substring(0, 11));
+				board.setBoardHit(rs.getInt("boardHit"));
+				board.setBoardFile(rs.getString("boardFile"));
+				board.setBoardRealFile(rs.getString("boardRealFile"));
+				board.setBoardGroup(rs.getInt("boardGroup"));
+				board.setBoardSequence(rs.getInt("boardSequence"));
+				board.setBoardLevel(rs.getInt("boardLevel"));
+				board.setBoardLike(rs.getInt("boardLike"));
+				boardList.add(board);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs != null) rs.close();
+				if(pstmt != null) pstmt.close();
+				if(conn != null) conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return boardList;
+	}
+	
+	/* 실시간 인기 게시글 정보를 가져오는 함수 */
+	public ArrayList<BoardDTO> getPopularList() {
+		ArrayList<BoardDTO> boardList = null;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String SQL = "SELECT * FROM BOARD WHERE boardLike >= 3 ORDER BY boardGroup DESC, boardSequence ASC";
+		try {
+			conn = dataSource.getConnection(); 
+			pstmt = conn.prepareStatement(SQL);
+			//pstmt.setInt(1, Integer.parseInt(pageNumber) * 10);
 			rs = pstmt.executeQuery();
 			boardList = new ArrayList<BoardDTO>();
 			while(rs.next()) {

@@ -2,6 +2,9 @@
 <!DOCTYPE html>
 <%@ page import="user.UserDAO" %>
 <%@ page import="user.UserDTO" %>
+<%@ page import="board.BoardDAO" %>
+<%@ page import="board.BoardDTO" %>
+<%@ page import="java.util.ArrayList" %>
 <html>
 <%
 	String userID = null;
@@ -12,6 +15,10 @@
 	UserDAO userDAO = new UserDAO();
 	String userProfile = userDAO.getProfile(userID); // profile의 경로를 가져오는 메서드
 	
+	BoardDAO boardDAO = new BoardDAO();
+	ArrayList<BoardDTO> boardPopularList = boardDAO.getPopularList(); /* 실시간 인기 게시글 정보를 가져오는 함수 */
+	ArrayList<BoardDTO> boardList = boardDAO.getRecentList(); /*최신 게시글 정보를 가져오는 함수 */
+
 %>
 <head>
 	<meta charset="UTF-8">
@@ -107,9 +114,83 @@
 		</div>
 	</nav>
 	<div class="container">
-		<div style="width:100%; height:160px; line-height:160px; text-align: center;">
-			<p>이미지 준비중..</p>
-		</div>
+		<div class="row">
+            <div class="col-md-6">
+                <h4>실시간 인기 게시물</h4>
+               	<hr>
+            <%
+				for(int i=0; i<boardPopularList.size(); i++) {
+					BoardDTO board = boardPopularList.get(i);
+			%>
+				<ul>
+					<li style="list-style:none; font-weight: bold;"><img src="images\star.png" style="width:20px; height:20px;"></img>&nbsp<a href="boardShow.jsp?boardID=<%= board.getBoardID() %>"><%= board.getBoardTitle() %></a></li>
+					<li style="list-style:none; margin-top:5px; font-size: 80%; color:grey;">작성자 <%= board.getUserID() %> | 조회  <%= board.getBoardHit() %> | 추천 <%= board.getBoardLike() %></li>
+					
+				</ul>
+				<hr style="margin-top:0px;">
+			<%
+				}
+			%>
+            </div>
+            <div class="col-md-6">
+            	<h4>최신글</h4>
+            	<hr>
+            <%
+				for(int i=0; i<boardList.size(); i++) {
+					BoardDTO board = boardList.get(i);
+			%>
+				<ul>
+					<li style="list-style:none; font-weight: bold;"><img src="images\balloon.png" style="width:50px; height:30px;"></img>&nbsp<a href="boardShow.jsp?boardID=<%= board.getBoardID() %>"><%= board.getBoardTitle() %></a></li>
+					<li style="list-style:none; margin-top:5px; font-size: 80%; color:grey;">작성자 <%= board.getUserID() %> | 조회  <%= board.getBoardHit() %> | 추천 <%= board.getBoardLike() %></li>
+				</ul>
+				<hr style="margin-top:0px;">
+			<%
+				}
+			%>
+            </div>
+        </div> 
+        <hr>
+        <!-- 미디어 -->
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title"><span class="glyphicon glyphicon-pencil"></span>
+                &nbsp;&nbsp;최신 강의 목록</h3>
+            </div>
+            <div class="panel-body">
+                <div class="media">
+                    <div class="media-left">
+                        <a href="lecture.html?lectureName=C"><img class="media-object" src="images/c.png" style="width:120px; height: 120px;"></a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading"><a href="lecture.html?lectureName=C">C언어 기초 프로그래밍 강의</a>&nbsp;<span class="badge">New</span></h4>
+                        C언어 강의는 기초 프로그래밍 강의입니다. 처음 프로그래밍을 접하는 입문자가 듣기에 적합합니다.
+                        강의료는 무료이며 C언어 기초 프로그래밍 강의는 총 20강으로 구성됩니다. 
+                    </div>
+                </div>
+                <hr>
+                <div class="media">
+                    <div class="media-left">
+                        <a href="lecture.html?lectureName=Java"><img class="media-object" src="images/java.png" style="width:120px; height: 120px;"></a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading"><a href="lecture.html?lectureName=Java">JAVA언어 기초 프로그래밍 강의</a>&nbsp;<span class="badge">New</span></h4>
+                        JAVA언어 강의는 기초 프로그래밍 강의입니다. 처음 프로그래밍을 접하는 입문자가 듣기에 적합합니다.
+                        강의료는 무료이며 JAVA언어 기초 프로그래밍 강의는 총 20강으로 구성됩니다. 
+                    </div>
+                </div>
+                <hr>
+                <div class="media">
+                    <div class="media-left">
+                        <a href="lecture.html?lectureName=Android"><img class="media-object" src="images/android.png" style="width:120px; height: 120px;"></a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading"><a href="lecture.html?lectureName=Android">안드로이드 기초 프로그래밍 강의</a>&nbsp;<span class="badge">New</span></h4>
+                        안드로이드 강의는 기초 프로그래밍 강의입니다. 처음 프로그래밍을 접하는 입문자가 듣기에 적합합니다.
+                        강의료는 무료이며 안드로이드 기초 프로그래밍 강의는 총 20강으로 구성됩니다. 
+                    </div>
+                </div>
+            </div>
+        </div>
 	</div>
 	<%
 		/*

@@ -36,11 +36,20 @@ public class BoardLikeUpdateServlet extends HttpServlet {
 		}
 		
 		BoardDAO boardDAO = new BoardDAO();
+		UserDAO userDAO = new UserDAO();
 		
 		HttpSession session = request.getSession();
-		String userID = (String) session.getAttribute("userID"); 
+		String userID = (String) session.getAttribute("userID"); // 세션
 		
-		BoardDTO board = boardDAO.getBoard(boardID);
+		BoardDTO board = boardDAO.getBoard(boardID); // 게시글 정보
+		String boardUserID = board.getUserID(); // 해당 게시글 작성자
+		
+		if(boardUserID == null || boardUserID.equals("")) {
+			request.getSession().setAttribute("messageType", "오류 메세지");
+			request.getSession().setAttribute("messageContent", "boardUserID 오류");
+			response.sendRedirect("index.jsp");
+			return;
+		}
 		
 		/* 본인 게시글에는 추천을 할 수 없도록 */
 		if(userID.equals(board.getUserID())) {
@@ -49,8 +58,10 @@ public class BoardLikeUpdateServlet extends HttpServlet {
 			response.sendRedirect("boardShow.jsp?boardID=" + boardID);
 			return;
 		}
+		/* 모든 예외를 통과한 후에 */
+		boardDAO.likeUpdate(boardID); // 좋아요 증가
+		userDAO.getPoint(boardUserID); // 유저 포인트 증가 
 		
-		boardDAO.likeUpdate(boardID);
 		request.getSession().setAttribute("messageType", "성공 메세지");
 		request.getSession().setAttribute("messageContent", "추천!");
 		response.sendRedirect("boardShow.jsp?boardID=" + boardID);

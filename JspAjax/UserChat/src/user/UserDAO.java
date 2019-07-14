@@ -88,7 +88,7 @@ public class UserDAO {
 	public int register(String userID, String userPassword, String userName, String userAge, String userGender, String userEmail, String userProfile) { // 아이디 중복체크
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String SQL = "INSERT INTO USER VALUES (?, ?, ?, ?, ?, ?, ?)";
+		String SQL = "INSERT INTO USER VALUES (?, ?, ?, ?, ?, ?, ?, 0)";
 		try {
 			conn = dataSource.getConnection(); // 실질적으로 커넥션풀에 접근하게 해줌 
 			pstmt = conn.prepareStatement(SQL);
@@ -136,6 +136,7 @@ public class UserDAO {
 				user.setUserGender(rs.getString("userGender"));
 				user.setUserEmail(rs.getString("userEmail"));
 				user.setUserProfile(rs.getString("userProfile"));
+				user.setUserPoint(rs.getInt("userPoint"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -181,7 +182,7 @@ public class UserDAO {
 		return -1; // 데이터베이스 오류
 	}
 	
-	// userProfile을 db에 업데이트 해주는 메서드 
+	/* userProfile을 db에 업데이트 */
 	public int profile(String userID, String userProfile) { 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -205,7 +206,7 @@ public class UserDAO {
 		return -1; // 데이터베이스 오류
 	}
 	
-	// userProfile의 경로를 가져오는 메서드 
+	/* userProfile의 경로를 가져오는 메서드 */
 	public String getProfile(String userID) { // 아이디 중복체크
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -217,11 +218,10 @@ public class UserDAO {
 			pstmt.setString(1, userID);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				if(rs.getString("userProfile").equals("")) { // 기본 상태의 프로필 사진 
-					return "http://localhost:8084/UserChat/images/icon.png";
+				if(rs.getString("userProfile").equals("")) { 
+					return "http://localhost:8084/UserChat/images/icon.png"; // 기본 상태의 프로필 사진 
 				}
 				return "http://localhost:8084/UserChat/upload/" + rs.getString("userProfile");
-				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -235,5 +235,28 @@ public class UserDAO {
 			}
 		}
 		return "http://localhost:8084/UserChat/images/icon.png";
+	}
+	
+	/* 유저 포인트 증가 */
+	public int getPoint(String userID) { 
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String SQL = "UPDATE USER SET userPoint = userPoint + 1 WHERE userID = ?";
+		try {
+			conn = dataSource.getConnection(); // 실질적으로 커넥션풀에 접근하게 해줌 
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, userID);
+			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt != null) pstmt.close();
+				if(conn != null) conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return -1; // 데이터베이스 오류
 	}
 }

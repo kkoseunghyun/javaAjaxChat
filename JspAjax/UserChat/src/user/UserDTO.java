@@ -13,6 +13,7 @@ public class UserDTO {
 	String userGender;
 	String userEmail;
 	String userProfile;		// 프로필 사진경로
+	int userPoint;
 	
 	public String getUserID() {
 		return userID;
@@ -55,5 +56,11 @@ public class UserDTO {
 	}
 	public void setUserProfile(String userProfile) {
 		this.userProfile = userProfile;
+	}
+	public int getUserPoint() {
+		return userPoint;
+	}
+	public void setUserPoint(int userPoint) {
+		this.userPoint = userPoint;
 	}
 }
