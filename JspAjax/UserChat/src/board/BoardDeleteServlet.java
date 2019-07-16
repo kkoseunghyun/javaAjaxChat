@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 public class BoardDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	/* jsp 페이지를 통하지 않고 서블릿에서 바로 작업을 수행하는 삭제의 경우, URL매핑으로 이동하는것이기 때문에 GET 메서드를 만들어주어야 한다.*/
+	/* JSP 페이지를 통하지 않고 서블릿에서 바로 작업을 수행하는 삭제의 경우, URL매핑으로 이동하는것이기 때문에 GET 메서드를 만들어주어야 한다.*/
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost (request, response);
 	}

@@ -113,12 +113,20 @@
     <servlet-name>BoardLikeServlet</servlet-name>
     <url-pattern>/boardLike</url-pattern>
   </servlet-mapping>
-   <servlet>
+  <servlet>
     <servlet-name>BoardLikeUpdateServlet</servlet-name>
     <servlet-class>board.BoardLikeUpdateServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>BoardLikeUpdateServlet</servlet-name>
     <url-pattern>/boardLikeUpdate</url-pattern>
+  </servlet-mapping>
+    <servlet>
+    <servlet-name>BoardCommentDeleteServlet</servlet-name>
+    <servlet-class>board.BoardCommentDeleteServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BoardCommentDeleteServlet</servlet-name>
+    <url-pattern>/boardCommentDelete</url-pattern>
   </servlet-mapping>
 </web-app>

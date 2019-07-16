@@ -10,12 +10,6 @@
 	if(session.getAttribute("userID") != null){
 		userID = (String) session.getAttribute("userID");
 	}
-	if(userID == null) {
-		session.setAttribute("messageType", "오류 메세지");
-		session.setAttribute("messageContent", "현재 로그인이 되어 있지 않습니다."); 
-		response.sendRedirect("index.jsp");	
-		return;
-	}
 	
 	String pageNumber = "1";
 	if(request.getParameter("pageNumber") != null) {
@@ -91,6 +85,23 @@
 				<li><a href="box.jsp">메세지함<span id="unread" class="label label-info"></span></a></li>
 				<li class="active"><a href="boardView.jsp">자유게시판</a></li>
 			</ul>
+			<%
+				if(userID == null){ // 로그인이 안된사람들에 한해 보여지는 네비게이션 바
+			%>
+			<ul class="nav navbar-nav navbar-right">
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false">접속하기<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="login.jsp">로그인</a></li>
+						<li><a href="join.jsp">회원가입</a></li>
+					</ul>
+				</li>	
+			</ul>
+			<%
+				} else {
+			%>
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle"
@@ -106,6 +117,9 @@
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="userStatus.jsp"><img class=".media-object img-circle" style="media-object: display:none; margin: 0 auto; max-width: 50px; max-height: 50px;" src="<%= userProfile %>"></img></a></li>
 			</ul>
+			<%
+				}
+			%>
 		</div>
 	</nav>
 	<div class="container">

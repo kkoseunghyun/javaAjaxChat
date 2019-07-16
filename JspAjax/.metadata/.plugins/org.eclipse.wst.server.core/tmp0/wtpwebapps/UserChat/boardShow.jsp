@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="board.BoardDAO" %>
 <%@ page import="board.BoardDTO" %>
+<%@ page import="board.CommentDTO" %>
 <%@ page import="user.UserDAO" %>
+<%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html>
 <%
@@ -23,6 +25,7 @@
 	UserDAO userDAO = new UserDAO();
 	String userProfile = userDAO.getProfile(userID); // profile의 경로를 가져오는 메서드
 	
+	ArrayList<CommentDTO> commentList = boardDAO.getCommentList(boardID); // 댓글 리스트를 가져오는 ArrayList
 %>
 <head>
 	<meta charset="UTF-8">
@@ -166,7 +169,7 @@
 					<td><h5><%= board.getBoardHit() %></h5></td>
 				</tr>
 				<tr>
-					<td style="vertical-align: middle; min-height: 150px; background-color: #fafafa; color: #000000; width:80px;"><h5>글 내용</h5></td>
+					<td style="vertical-align: middle; min-height: 150px; background-color: #fafafa; color: #000000; height: 100px; width:80px;"><h5>글 내용</h5></td>
 					<td colspan="3" style="text-align: left;"><h5><%= board.getBoardContent() %></h5></td>
 				</tr>
 				<tr>
@@ -175,16 +178,22 @@
 				</tr>
 			</thead>
 			<tbody>
+			<%
+				if(userID != null) {
+			%>
 				<tr>
 					<td colspan="5">
-						<a href="boardLikeUpdate?boardID=<%= board.getBoardID() %>" class="btn btn-primary" style="background-color:white; color:black;">좋아요 <span id="likeNumber"></span></a>
+						<a href="boardLikeUpdate?boardID=<%= board.getBoardID() %>" class="btn btn-primary" style="background-color:white; color:black;">좋아요 <span id="likeNumber" style="color:red; font-weight:bold;"></span></a>
 					</td>
 				</tr>
 				<tr>
+			<%
+				}
+			%>
 					<td colspan="5" style="text-align: right;">
 						<a href="boardView.jsp" class="btn btn-primary">목록</a>
 						<%
-							if(userID.equals(board.getUserID())) { // 작성자 본인만 볼 수 있는 버튼들 
+							if(userID != null && userID.equals(board.getUserID())) { // 작성자 본인만 볼 수 있는 버튼들 
 						%>
 							<a href="boardUpdate.jsp?boardID=<%= board.getBoardID() %>" class="btn btn-primary">수정</a>
 							<a href="boardDelete?boardID=<%= board.getBoardID() %>" class="btn btn-primary" onclick="return confirm('정말로 삭제하시겠습니까?')">삭제</a>
@@ -195,6 +204,49 @@
 				</tr>
 			</tbody>
 		</table>
+		<!-- 댓글  -->
+		<div class="row">
+		<%
+			for(int i=0; i<commentList.size(); i++) {
+				CommentDTO comment = commentList.get(i);
+		%>
+			<ul>
+				<li style="list-style:none; display: inline; font-weight:bold; color:#5882FA;"><%= comment.getUserID() %></li>
+				<li style="list-style:none; display: inline;"><%= comment.getContentDate() %></li>
+			</ul>
+			<ul>
+				<li style="list-style:none; display: inline;"><%= comment.getContent() %></li>
+		<%
+				if(userID != null && userID.equals(comment.getUserID())) { // 댓글 작성자 본인에 한해서만 보여지도록 
+		%>
+				<a href="boardCommentDelete?commentID=<%= comment.getCommentID() %>" class="btn btn-primary pull-right" onclick="return confirm('정말로 삭제하시겠습니까?')">삭제</a>
+		<%
+				} 
+		%>
+			</ul>
+			<hr>
+		<%
+			}
+		%>
+		</div>
+		<%
+			if(userID != null) {
+		%>
+			<!-- 댓글 입력창 -->
+			<form method="post" action="./boardCommentWrite?boardID=<%= board.getBoardID() %>">
+				<div class="row">
+					<input class="form-control" maxlength="100" name="content" style="height:80px;" placeholder="댓글을 입력해주세요.">
+					<input class="btn btn-primary pull-right" type="submit" value="댓글쓰기" style="margin-top:10px; font-weight:bold; font-size:120%; height:40px; width:180px; border:1px solid red; background-color:red;">	
+				</div>
+			</form>
+			<hr>
+		<%
+			} else {
+		%>
+			<h5 style="text-align:center;"> 로그인을 하셔야 댓글을 작성할 수 있습니다. </h5>
+		<%
+			}
+		%>
 	</div>
 	<%
 		/*
