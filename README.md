@@ -1,7 +1,14 @@
 # JSPAjaxChat & Community :eyes:
 RealTime Chat Service & Community site
 
-## Patch Note
+## 0. Development Environment
+* OS : Windosw 10
+* IDE : JavaEE
+* Language : Java
+
+## 1. Web Demo
+
+## 2. Patch Note
 - 모달 창 
 - 회원가입 
 - 로그인/로그아웃
@@ -28,14 +35,14 @@ RealTime Chat Service & Community site
 - 실시간 인기 게시글, 최시글 5개 표시 **(19.7.13)**
 - 게시글 댓글 작성, 표시, 삭제 **(19.7.15)**
 
-## To Do List
-- **좋아요 한명당 한번만(세션 관리)**
-- **게시글에 업로드된 사진 보여주기(jpg,png,gif)**
-- **대댓글 기능 추가**
-- **SSL 기능 추가**
-- **admin으로는 가입 불가 조건 넣기**
-- **회원가입시 특수문자, 특정아이디 금지**
-- **유저 비밀번호 보안 알고리즘 적용** 
+## 3. To Do List
+- 좋아요 한명당 한번만(세션 관리)
+- 게시글에 업로드된 사진 보여주기(jpg,png,gif)
+- 대댓글 기능 추가
+- SSL 기능 추가
+- admin으로는 가입 불가 조건 넣기
+- 회원가입시 특수문자, 특정아이디 금지
+- 유저 비밀번호 보안 알고리즘 적용
 - 댓글 좋아요 기능
 - 베스트 댓글 상단 노출
 - 회원가입된 유저 목록 표시
