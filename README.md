@@ -1,4 +1,5 @@
 # JSPAjaxChat & Community :eyes:
+RealTime Chat Service & Community site
 
 ## Patch Note
 - 모달 창 
